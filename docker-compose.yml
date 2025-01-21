@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: ka-postgres
+    environment:
+      POSTGRES_PASSWORD: 12345
+    ports:
+      - "5438:5432"
+    networks:
+      - spark-postgres-network
+
+  spark:
+    image: bitnami/spark:latest
+    container_name: spark
+    networks:
+      - spark-postgres-network
+
+networks:
+  spark-postgres-network:
+    driver: bridge
